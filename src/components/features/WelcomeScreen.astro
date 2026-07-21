@@ -1,0 +1,85 @@
+<script is:inline>
+  (function initWelcome() {
+    // sessionStorage: 关掉浏览器标签页后重新进入会再次显示
+    if (typeof sessionStorage === "undefined") return;
+    if (sessionStorage.getItem("mikasa-welcome-seen")) return;
+    if (!document.body) { document.addEventListener("DOMContentLoaded", initWelcome); return; }
+
+    var overlay = document.createElement("div");
+    overlay.id = "welcome-overlay";
+    overlay.innerHTML = '\
+      <style>\
+        #welcome-overlay {\
+          position: fixed; inset: 0; z-index: 99999;\
+          display: flex; align-items: center; justify-content: center;\
+          background: linear-gradient(160deg, #0a0a0a 0%, #1a0a2e 30%, #0d0015 60%, #000 100%);\
+          transition: opacity 0.8s ease-out;\
+        }\
+        #welcome-overlay.fadeout { opacity: 0; pointer-events: none; }\
+        .welcome-content { text-align: center; color: #fff; }\
+        .welcome-title {\
+          font-size: 3.5rem; font-weight: 300; letter-spacing: .15em;\
+          margin-bottom: 1.5rem;\
+          text-shadow: 0 0 60px rgba(180,130,255,.4), 0 0 120px rgba(180,130,255,.2);\
+          animation: welcomeIn 1.2s ease-out;\
+        }\
+        .welcome-time {\
+          font-size: 1.8rem; font-weight: 200; letter-spacing: .2em;\
+          margin-bottom: .8rem; opacity: .85;\
+          font-variant-numeric: tabular-nums;\
+        }\
+        .welcome-sub {\
+          font-size: 1rem; font-weight: 200; letter-spacing: .15em;\
+          margin-bottom: 3rem; opacity: .6;\
+        }\
+        .welcome-enter {\
+          background: transparent;\
+          border: none;\
+          color: rgba(255,255,255,.7);\
+          padding: 12px 48px; font-size: 1.1rem;\
+          letter-spacing: .3em; cursor: pointer;\
+          transition: all .4s;\
+          position: relative;\
+        }\
+        .welcome-enter::after {\
+          content: "";\
+          position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);\
+          width: 0; height: 1px;\
+          background: linear-gradient(90deg, transparent, rgba(180,130,255,.6), transparent);\
+          transition: width .4s;\
+        }\
+        .welcome-enter:hover { color: #fff; letter-spacing: .45em; }\
+        .welcome-enter:hover::after { width: 100%; }\
+        @keyframes welcomeIn {\
+          from { opacity: 0; transform: translateY(20px); }\
+          to   { opacity: 1; transform: translateY(0); }\
+        }\
+      </style>\
+      <div class="welcome-content">\
+        <h1 class="welcome-title">Mikasaの小站</h1>\
+        <p class="welcome-time" id="welcome-time"></p>\
+        <p class="welcome-sub">很高兴与你相遇</p>\
+        <button class="welcome-enter" id="welcome-enter">进入</button>\
+      </div>\
+    ';
+    document.body.appendChild(overlay);
+
+    function tick() {
+      var el = document.getElementById("welcome-time");
+      if (!el) return;
+      var d = new Date();
+      var t = [d.getHours(), d.getMinutes(), d.getSeconds()]
+        .map(function (n) { return String(n).padStart(2, "0"); }).join(":");
+      el.textContent = t;
+    }
+    tick();
+    var clock = setInterval(tick, 1000);
+
+    document.getElementById("welcome-enter").addEventListener("click", function () {
+      clearInterval(clock);
+      overlay.classList.add("fadeout");
+      sessionStorage.setItem("mikasa-welcome-seen", "1");
+      setTimeout(function () { overlay.remove(); }, 800);
+    });
+  })();
+</script>

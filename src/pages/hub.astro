@@ -1,0 +1,114 @@
+---
+import { Icon } from "astro-icon/components";
+import { siteConfig } from "@/config";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+if (!siteConfig.pages.hub) {
+	return Astro.redirect("/404/");
+}
+
+const tools = [
+  {
+    category: "视频转换",
+    icon: "material-symbols:movie",
+    color: "bg-red-500",
+    name: "AI Convert Hub",
+    desc: "200+格式互转，视频/音频/图片/文档全能，永久免费免登录",
+    url: "https://www.ai-convert.cc",
+  },
+  {
+    category: "图片工具",
+    icon: "material-symbols:image",
+    color: "bg-green-500",
+    name: "Squoosh",
+    desc: "Google 出品，浏览器本地压缩，文件不上传，支持 WebP/AVIF",
+    url: "https://squoosh.app",
+  },
+  {
+    category: "文档办公",
+    icon: "material-symbols:description",
+    color: "bg-blue-500",
+    name: "PDFgear",
+    desc: "完全免费无水印，PDF ↔ Word/Excel/PPT，支持 OCR 文字识别",
+    url: "https://www.pdfgear.com",
+  },
+  {
+    category: "程序员工具",
+    icon: "material-symbols:code",
+    color: "bg-cyan-500",
+    name: "菜鸟工具",
+    desc: "JSON格式化+编码解码+在线编译运行+正则测试，国内最经典",
+    url: "https://c.runoob.com",
+  },
+  {
+    category: "AI 助手",
+    icon: "material-symbols:smart-toy",
+    color: "bg-pink-500",
+    name: "DeepSeek",
+    desc: "国产大模型，智能对话+代码生成+文档分析，免费使用",
+    url: "https://chat.deepseek.com",
+  },
+  {
+    category: "AI 助手",
+    icon: "material-symbols:smart-toy",
+    color: "bg-indigo-500",
+    name: "豆包",
+    desc: "字节跳动出品，AI搜索+写作+图像生成+编程辅助",
+    url: "https://www.doubao.com",
+  },
+  {
+    category: "AI 助手",
+    icon: "material-symbols:smart-toy",
+    color: "bg-emerald-500",
+    name: "Kimi",
+    desc: "月之暗面，超长上下文，支持联网搜索+文件阅读",
+    url: "https://kimi.moonshot.cn",
+  },
+];
+---
+
+<MainGridLayout title="中转站" description="实用在线工具合集">
+  <div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32">
+    <div class="card-base z-10 px-9 py-6 relative w-full">
+      <!-- 页面标题 -->
+      <div class="mb-8">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="h-8 w-8 rounded-lg bg-(--primary) flex items-center justify-center text-white dark:text-black/70">
+            <Icon is:inline name="material-symbols:bookmark" class="text-[1.5rem]" />
+          </div>
+          <div class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+            中转站
+          </div>
+        </div>
+        <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+          精选实用在线工具，免费使用。
+        </p>
+      </div>
+
+      <!-- 工具卡片 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {tools.map((tool) => (
+          <a
+            href={tool.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block p-5 rounded-xl border-2 border-neutral-200 dark:border-neutral-700 bg-(--btn-regular-bg) hover:border-(--primary) hover:shadow-lg hover:shadow-(--primary)/15 hover:-translate-y-1 transition-all duration-200 ease-out"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div class={`h-10 w-10 rounded-lg ${tool.color} flex items-center justify-center text-white`}>
+                <Icon is:inline name={tool.icon} class="text-[1.25rem]" />
+              </div>
+              <div>
+                <div class="text-xs text-neutral-500 dark:text-neutral-400">{tool.category}</div>
+                <div class="font-semibold text-neutral-900 dark:text-neutral-100">{tool.name}</div>
+              </div>
+            </div>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              {tool.desc}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</MainGridLayout>
