@@ -4,5 +4,9 @@
 	"compatibility_flags": ["nodejs_compat"],
 	"assets": {
 		"directory": "./dist"
-	}
+	},
+	"routes": [
+		{ "pattern": "horolove.top", "custom_domain": true },
+		{ "pattern": "www.horolove.top", "custom_domain": true }
+	]
 }
