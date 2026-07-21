@@ -1,6 +1,6 @@
 {
 	"name": "horo-blog",
-	"compatibility_date": "2025-01-01",
+	"compatibility_date": "2026-07-21",
 	"compatibility_flags": ["nodejs_compat"],
 	"assets": {
 		"directory": "./dist"
